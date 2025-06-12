@@ -1,0 +1,161 @@
+# 📁 Project Context: Anime / Kino / Serial Bot (Multi-language Partner System)
+
+## 📌 Umumiy maqsad
+
+Telegram bot orqali foydalanuvchilarga:
+
+* Anime
+* Kinolar
+* Seriallar
+* Multfilmlar
+* Dramalar
+
+Yuklab olish, izlash, profil yuritish, XP tizimi, darajaga ko‘tarilish va kanal ulash imkonini berish. D darajadan boshlab kanal ulash, A dan boshlab esa partner huquqlari.
+
+---
+
+
+## 🎖 XP & Rank tizimi
+
+| Daraja     | Nomi          | XP oralig‘i      | Huquqlar                            |
+| ---------- | ------------- | ---------------- | ----------------------------------- |
+| E          | Boshlang‘ich  | 0 - 99 XP        | Faqat ko‘rish / yuklab olish        |
+| D          | Faol          | 100 - 249 XP     | Kanal ulash tugmasi ochiladi        |
+| C          | Ijodkor       |  250 - 499 XP    | Yana ko‘proq imkoniyatlar           |
+| B          | Tashkilotchi  | 500- 899 XP      | Tayyor kontentlar yuklash           |
+| A          | Hamkor        | 900+ 5000XP      | Panel, kanal qabul va tahlil qilish |
+| S, SS, SSS | Super userlar | Manual belgilash | Full access (admin approval)        |
+
+‼️Rank tizimini admin tahrirlashi mumkin yani xp lar oralig'ini ‼️ 
+
+‼️Admin userlar xp sini xohlagancha o'zgartirishi mumkin‼️ 
+
+### 🔢 XP beriladigan ishlar:
+
+* Profil to‘ldirish: +30 XP
+* Har bir referal: +10 XP
+* Kanal ulash: +50 XP (agar qabul qilinsa)
+
+---
+
+## 🌐 Til siyosati
+
+Bot 3 tilda ishlaydi:
+
+* 🇺🇿 O‘zbek tili
+* 🇷🇺 Rus tili
+* 🇬🇧 Ingliz tili
+
+### Ko‘p tillilik qo‘llanmasi
+
+texts.py faylida har bir matn quyidagicha saqlanadi:
+
+python
+texts = {
+    "welcome": {
+        "uz": "Xush kelibsiz!",
+        "ru": "Добро пожаловать!",
+        "en": "Welcome!"
+    },
+    ...
+}
+
+
+---
+
+## 🧠 Bot logikasi (Algorithm)
+
+1. 👤 Foydalanuvchi /start bosadi → til tanlaydi → ro‘yxatdan o‘tadi → XP oladi.
+2. 🎯 Harakatlar orqali XP to‘playdi (referal, doimiy foydalanish, majburiy obuna kanallariga a'zo bo'lish)
+3. 📈 D darajaga chiqqanda:
+
+   * "Kanal ulash" tugmasi main menu ga qo‘shiladi (inline, shart emas command)
+4. 📬 Kanal ulashadi → 5k+ bo‘lsa → A rank → Partner panel
+5. 🔐 A dan yuqori darajalar admin orqali qo‘lda beriladi
+6. 🧩 Har bir daraja uchun turli tugmalar, sahifalar, ruxsatlar ishlaydi
+
+---
+
+## 📌 Kelishilgan qoidalar
+
+* Fayl nomi aytiladi, so‘ng kod yoziladi.
+* Har bir funksiya maksimal izohlar bilan yoziladi.
+* Tilga, foydalanuvchi darajasiga qarab tugmalar va sahifalar farqlanadi.
+* Rejalar har doim algorithm asosida davom ettiriladi. kod yozishdan oldin algorithm tuziladi
+
+---
+
+## ✅ Oxirgi status
+
+* Fayl strukturasi to‘liq belgilandi
+* XP va rank tizimi aniqlandi
+* Kanal ulash D rankda faollashadi, A rankda partner panel ochiladi
+* Ko‘p tilda ishlashga tayyorlik bor
+
+---
+
+✅ Muhim eslatmalar:
+
+Har bir fayl o‘z vazifasini bajaradi. Modular, izchil, testga tayyor struktura bo‘ladi.
+
+Til, daraja, XP, kanal ulash, referal, media qidiruv, yuklab olish kabi barcha tizimlar bosqichma-bosqich amalga oshiriladi.
+
+Har bir kod quyidagi tartibda bo‘ladi:
+
+Fayl nomi
+
+Qisqacha vazifasi
+
+Kutilayotgan natija
+
+Annotatsiyalangan kod
+
+Eslatma (agar kerak bo‘lsa)
+
+🧱 Boshlanish uchun strukturani eslab qoldim:
+bash
+Копировать
+Редактировать
+project/
+│
+├── handlers/
+│   ├── user/
+│   │   ├── start.py
+│   │   ├── register.py
+│   │   └── ...
+│   ├── admin/
+│   │   └── ...
+│   └── partner/
+│       └── ...
+│
+├── keyboards/
+│   ├── user/
+│   ├── admin/
+│   ├── partner/
+│   └── language_keyboard.py
+│
+├── services/
+│   ├── db.py
+│   ├── user_level.py
+│   └── channel_checker.py
+│
+├── states/
+│   ├── register.py
+│   ├── partner_connect.py
+│   └── admin_edit.py
+│
+├── middlewares/
+│   └── subscription.py
+│
+├── data/
+│   ├── config.py
+│   └── constants.py
+│
+├── utils/
+│   └── helper.py
+│
+├── texts/
+│   └── texts.py
+│
+├── main.py
+└── requirements.txt
