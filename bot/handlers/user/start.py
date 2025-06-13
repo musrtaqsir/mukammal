@@ -2,45 +2,43 @@
 
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
-from aiogram.fsm.context import FSMContext
-from bot.keyboards.language_keyboard import get_language_keyboard
-from bot.services.db import get_user, create_user
-from bot.states.register import RegisterState
-from data.config import AVAILABLE_LANGUAGES
-from data.texts import texts
+from aiogram.filters import CommandStart
+from services.db import get_user_by_id, create_user, update_user_lang
+from keyboards.language_keyboard import get_language_keyboard
+from texts.texts import texts
+from datetime import datetime
+from services.user_level import get_rank_by_xp
 
 router = Router()
 
-@router.message(F.text == "/start")
-async def start_handler(message: Message, state: FSMContext):
-    user = await get_user(message.from_user.id)
+@router.message(CommandStart())
+async def cmd_start(message: Message):
+    user = await get_user_by_id(message.from_user.id)
 
-    if user:
-        lang = user.get("language", "uz")
-        await message.answer(texts["already_registered"][lang])
-        return
+    if not user:
+        # Foydalanuvchini DBga qo‘shamiz va boshlang‘ich XP beramiz
+        await create_user(
+            user_id=message.from_user.id,
+            full_name=message.from_user.full_name,
+            username=message.from_user.username,
+            lang_code="none",  # Hozircha til tanlanmagan
+            joined_at=datetime.utcnow()
+        )
 
     await message.answer(
-        "\n".join([
-            texts["choose_language"]["uz"],
-            texts["choose_language"]["ru"],
-            texts["choose_language"]["en"]
-        ]),
+        text="Tilni tanlang / Choose your language / Выберите язык:",
         reply_markup=get_language_keyboard()
     )
-    await state.set_state(RegisterState.main_menu)
 
 
-@router.callback_query(RegisterState.main_menu)
-async def language_chosen(call: CallbackQuery, state: FSMContext):
-    lang = call.data.split("_")[1]
-    print(lang)
+@router.callback_query(F.data.startswith("lang_"))
+async def lang_chosen(callback: CallbackQuery):
+    lang = callback.data.split("_")[1]
+    user_id = callback.from_user.id
 
-    if lang not in AVAILABLE_LANGUAGES:
-        await call.answer("Noto‘g‘ri til!", show_alert=True)
-        return
+    # Foydalanuvchining tilini yangilaymiz
+    await update_user_lang(user_id, lang)
 
-    await state.update_data(language=lang)
-
-    await call.message.edit_text(texts["language_selected"][lang])
-    await call.message.answer(texts["welcome"][lang])
+    # Matnlarni tanlangan tilga moslab chiqaramiz
+    text = texts["welcome"].get(lang, "Xush kelibsiz!")
+    await callback.message.edit_text(text=text)

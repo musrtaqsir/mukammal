@@ -26,7 +26,7 @@ Yuklab olish, izlash, profil yuritish, XP tizimi, darajaga ko‘tarilish va kana
 | A          | Hamkor        | 900+ 5000XP      | Panel, kanal qabul va tahlil qilish |
 | S, SS, SSS | Super userlar | Manual belgilash | Full access (admin approval)        |
 
-‼️Rank tizimini admin tahrirlashi mumkin yani xp lar oralig'ini ‼️ 
+‼️Rank tizimini admin tahrirlashi mumkin yani xp lar oralig'ini‼️ 
 
 ‼️Admin userlar xp sini xohlagancha o'zgartirishi mumkin‼️ 
 
@@ -111,6 +111,10 @@ Kutilayotgan natija
 Annotatsiyalangan kod
 
 Eslatma (agar kerak bo‘lsa)
+
+❇️ ADMINLAR:
+
+
 
 🧱 Boshlanish uchun strukturani eslab qoldim:
 bash
